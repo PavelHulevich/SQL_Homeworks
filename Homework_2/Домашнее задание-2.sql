@@ -1,5 +1,7 @@
-create schema if not exists citys_users;
+drop schema if exists citys_users;            --  добавлена команда удаления БД
+create schema citys_users;                    -- добавлена команда создания БД
 use citys_users;
+
 drop table if exists users;
 drop table if exists citys;
 
@@ -15,8 +17,12 @@ drop table if exists citys;
  user_city int,
  foreign key (user_city) references citys(city_id)
  );
- alter table users add birthday date
+ alter table users add birthday date default '1900-01-01'                -- добавлен default
 		check (birthday >= '1900-01-01' and birthday < '2025-10-25');
+
+# check (birthday >= '1900-01-01' and birthday <= curdate());
+# При сравнении с текущей датой появляется ошибка
+# [HY000][3814] An expression of a check constraint 'users_chk_1' contains disallowed function: curdate.
 
 select * from users;
 
