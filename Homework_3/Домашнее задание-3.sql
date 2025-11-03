@@ -48,3 +48,17 @@ update citys
 	set city_name = 'Кобрино'
     where city_name = 'Гадюкино';
 
+# ________________________ДОМАШНЯЯ РАБОТА №3 ___________________________
+
+select * from users
+    order by birthday;
+
+select citys.city_name from citys;   -- вывод только названий городов из таблицы
+
+select * from citys                  -- вывод названий городов у которых id больше 2
+    where city_id > 2;
+
+select users.last_name, count(users.last_name) as 'Сколько одинаковых имен' from users
+    group by users.last_name
+    having count(last_name) > 1
+    order by count(last_name) desc ; -- вывод повторяющихся имен с указанием количества повторов.
