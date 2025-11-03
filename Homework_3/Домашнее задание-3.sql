@@ -36,7 +36,7 @@ drop table if exists citys;
             ('Коржов', 'Иван', '1980-05-06'),
             ('Кефиров', 'Коржик', '1980-05-06'),
             ('Белый', 'Петр', '1987-05-06'),
-            ('Черный', 'Петр', '1988-05-06');
+            ('Черный', 'Петр', '1987-05-06');
 insert citys (city_name)
 	values ('Рига'), ('Осло'), ('Мозырь'), ('Гадюкино'), ('Брест');
     
@@ -51,9 +51,16 @@ update citys
 # ________________________ДОМАШНЯЯ РАБОТА №3 ___________________________
 
 select * from users
-    order by birthday;
+    order by birthday;               -- сортировка пользователей по дате рождения
+
+select first_name, last_name, year(users.birthday) as Год_рождения from users
+    where year((users.birthday)) > 1980
+    order by birthday;               -- имена, фамилии и год рождения тех, кто родился после 1980 г.
 
 select citys.city_name from citys;   -- вывод только названий городов из таблицы
+
+select citys.city_name from citys
+    order by city_name desc ;        -- вывод только названий городов с сортировкой в обратном порядке.
 
 select * from citys                  -- вывод названий городов у которых id больше 2
     where city_id > 2;
@@ -61,4 +68,20 @@ select * from citys                  -- вывод названий городо
 select users.last_name, count(users.last_name) as 'Сколько одинаковых имен' from users
     group by users.last_name
     having count(last_name) > 1
-    order by count(last_name) desc ; -- вывод повторяющихся имен с указанием количества повторов.
+    order by count(last_name) desc ; -- вывод повторяющихся имен с указанием количества повторов с сортировкой на уменьшение повторов.
+
+select year(users.birthday) from users
+    group by year(users.birthday);    -- все годы рождения пользователей из таблицы users
+
+select year(users.birthday), count(users.birthday) from users
+    group by year(users.birthday);         -- количество пользователей определенного года рождения
+
+select year(users.birthday) as 'Годы в которых есть Петры', count(users.birthday) as 'Петры в этом году' from users
+    where last_name in ('Петр')
+    group by year(users.birthday);           -- Выводим с именем Петр и указанием года рождения и кол-ва Петров в этом году
+
+select users.first_name, users.last_name, (year(curdate()) - year(users.birthday)) as 'Возраст' from users
+    order by (year(curdate()) - year(users.birthday)); -- Вычисление возраста с сортировкой по возрасту.
+
+
+
