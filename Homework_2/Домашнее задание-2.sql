@@ -1,3 +1,5 @@
+create schema if not exists citys_users;
+use citys_users;
 drop table if exists users;
 drop table if exists citys;
 
@@ -5,17 +7,19 @@ drop table if exists citys;
  city_id int auto_increment primary key,
  city_name varchar(20) unique not null
  );
- 
+
  create table users ( 
  users_id int auto_increment primary key,
  first_name varchar (15),
- last_name varchar (20), 
+ last_name varchar (20),
  user_city int,
  foreign key (user_city) references citys(city_id)
  );
  alter table users add birthday date
-		check (birthday > '1900-01-01' and birthday < '2025-10-25');
- 
+		check (birthday >= '1900-01-01' and birthday < '2025-10-25');
+
+select * from users;
+
  insert users(first_name, last_name, birthday)
 	values  ('Иванов', 'Петр', '1980-05-06'),
 			('Сидоров', 'Иван', '1982-01-11'),
