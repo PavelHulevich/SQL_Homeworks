@@ -83,5 +83,11 @@ select year(users.birthday) as 'Годы в которых есть Петры',
 select users.first_name, users.last_name, (year(curdate()) - year(users.birthday)) as 'Возраст' from users
     order by (year(curdate()) - year(users.birthday)); -- Вычисление возраста с сортировкой по возрасту.
 
+select users.last_name, count(last_name), round(year(curdate()) - avg(year(users.birthday)),0) as 'Средний возраст' from users
+group by users.last_name
+having count(last_name) > 1;                -- Выводит количество и средний возраст всех юзеров с одинаковым именем
+
+
+
 
 
