@@ -33,10 +33,15 @@ drop table if exists citys;
 			('Ковалев', 'Вася', '1986-05-06'),
             ('Васин', 'Виталий', '1980-05-06'),
             ('Виталин', 'Вася', '1980-05-06'),
-            ('Коржов', 'Иван', '1980-05-06'),
+            ('Коржов', 'Иван', '1979-05-06'),
             ('Кефиров', 'Коржик', '1980-05-06'),
             ('Белый', 'Петр', '1987-05-06'),
-            ('Черный', 'Петр', '1987-05-06');
+            ('Желтый', '', '1985-05-06'),
+            ('Зеленый', null, '1989-05-06'),
+            (null, 'Джек', '1988-05-06'),
+            ('Черный', 'Петр', '1987-05-06'),
+            ('Лысый', 'Иван', '1980-01-06'),
+            (null, 'Иван', '1980-09-06');
 insert citys (city_name)
 	values ('Рига'), ('Осло'), ('Мозырь'), ('Гадюкино'), ('Брест');
     
@@ -107,6 +112,19 @@ SELECT users.first_name, users.last_name, YEAR(curdate()) - YEAR(users.birthday)
     END 'Есть ли 40 лет'
     FROM users
     ORDER BY users.birthday DESC ;          -- Сравнение дат через case
+
+SELECT *
+    FROM users
+    WHERE last_name = '' OR last_name IS NULL; -- пользователи с пустым именем или null (не указано имя)
+
+SELECT last_name, COUNT(last_name) AS 'Сколько таких имен'
+    FROM users
+    WHERE year(users.birthday) >= '1980' AND
+        CASE  WHEN last_name LIKE 'В%' THEN 1
+              WHEN last_name LIKE 'И%' THEN 1
+              ELSE 0
+        END
+    GROUP BY last_name;    -- Выводит только имена начинающиеся на В и И с годом рождения от 1980 включительно
 
 
 
