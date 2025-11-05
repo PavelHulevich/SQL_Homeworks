@@ -18,7 +18,7 @@ drop table if exists citys;
  foreign key (user_city) references citys(city_id)
  );
  alter table users add birthday date default '1900-01-01'                -- добавлен default
-		check (birthday >= '1900-01-01' and birthday < '2025-10-25');
+		check (birthday >= '1900-01-01' and birthday < sysdate());
 
 # check (birthday >= '1900-01-01' and birthday <= curdate());
 # При сравнении с текущей датой появляется ошибка
