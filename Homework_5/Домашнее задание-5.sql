@@ -128,3 +128,39 @@ SELECT last_name, COUNT(last_name) AS 'Сколько таких имен'
         END
     GROUP BY last_name;    -- Выводит только имена начинающиеся на В и И с годом рождения от 1980 включительно
 
+# ________________________ДОМАШНЯЯ РАБОТА №5 ___________________________
+
+SELECT *                                        -- Внутреннее соединение (INNER JOIN)
+    FROM users AS u                             -- Выбираются только те строки из первой и второй таблиц
+        INNER JOIN  citys AS c                  -- в которых есть совпадающие поля (ключи)
+        ON u.user_city = c.city_id;
+
+SELECT *                                        -- Левое внешнее соединение (LEFT OUTER JOIN)
+    FROM users AS u                             -- Выбираются все строки из левой таблицы и строки из правой таблицы
+        LEFT JOIN citys AS c                    -- на которые указывает ключ из левой таблицы
+            ON u.user_city = c.city_id;
+
+SELECT *                                        -- Правое внешнее соединение (RIGHT OUTER JOIN)
+    FROM users AS u                             -- Выбираются все строки из правой таблицы и строки из левой таблицы
+        RIGHT JOIN citys AS c                   -- которые указывают на ключ из выбранной строки правой таблицы
+            ON u.user_city = c.city_id;
+
+SELECT *                                        -- Полное внешнее соединение (FULL OUTER JOIN)
+    FROM users AS u                             -- в MySQL реализуется только объединением левого и правого соединений
+        LEFT JOIN citys AS c
+            ON u.user_city = c.city_id
+UNION
+SELECT *
+    FROM users AS u
+        RIGHT JOIN citys AS c
+            ON u.user_city = c.city_id;
+
+SELECT *                                        -- Перекрёстное соединение (CROSS JOIN)
+    FROM users AS u                             -- каждой строке первой таблицы подставляется каждая из строк второй таблицы
+        CROSS JOIN citys AS c;
+
+
+
+
+
+
