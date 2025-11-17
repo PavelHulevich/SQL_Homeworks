@@ -95,13 +95,13 @@ INSERT person(first_name, last_name, person_gender)
 INSERT address (`street`, `postal_code`, `city`, `address_person`)
     VALUES
          ('Suite 883', '20068', 'Britneytown', 9),
-         ('Apt. 207', '99446', 'East Amosview', 6),
+         ('Apt. 207', '99446', 'East Amosview', 4),
          ('Suite 584', '43659', 'Rodriguezland', 7),
          ('Apt. 999', '54235', 'Mohrmouth', 6),
-         ('Suite 953', '33413', 'South Alvina', 4),
+         ('Suite 953', '33413', 'South Alvina', 5),
          ('Suite 977', '61322', 'Prohaskahaven', 8),
          ('Suite 997', '18772', 'New Paula', 10),
-         ('Suite 518', '58309', 'Wolfchester', 9),
+         ('Suite 518', '58309', 'Wolfchester', 3),
          ('Suite 359', '54359', 'Loweland', 2),
          ('Apt. 102', '05207', 'Larkinbury', 1);
 
@@ -109,12 +109,12 @@ INSERT email (email, email_person)
     VALUES
         ('bogisich.amina@example.com',8),
         ('carolanne45@example.org',9),
-        ('vandervort.major@example.net',3),
+        ('vandervort.major@example.net',10),
         ('nprice@example.org',2),
         ('hilario94@example.org',7),
         ('howell.maddison@example.net',1),
         ('isom82@example.org',3),
-        ('runolfsdottir.kristopher@example.net',3),
+        ('runolfsdottir.kristopher@example.net',4),
         ('quincy52@example.net',6),
         ('prosacco.sheila@example.com',5);
 
@@ -126,10 +126,10 @@ INSERT INTO phone (phone, phone_person)
                         ('1-383-938-360',1),
                         ('800.115.1128x',5),
                         ('1-884-315-662',9),
-                        ('1-850-780-000',1),
+                        ('1-850-780-000',2),
                         ('+75(9)3622940',8),
                         ('09377838954',4),
-                        ('1-577-710-252',9);
+                        ('1-577-710-252',10);
 
 INSERT position_ (position_name)
     VALUES
@@ -160,26 +160,52 @@ INSERT title(title_name)
 INSERT person_title(person_title_person, person_title_title)
     VALUES
         (1, 2),
-        (3, 4),
-        (5, 6),
-        (7, 8),
+        (2, 4),
+        (3, 6),
+        (4, 8),
         (5, 4),
-        (9, 2),
-        (2, 7),
+        (6, 2),
+        (7, 7),
         (8, 4),
-        (3, 2),
-        (1, 5);
+        (9, 2),
+        (10, 5);
 
 INSERT person_position(person_position_person, person_position_position)
 VALUES
     (1, 2),
-    (3, 4),
-    (5, 6),
-    (7, 8),
+    (2, 4),
+    (3, 6),
+    (4, 8),
     (5, 4),
-    (9, 2),
-    (2, 7),
+    (6, 2),
+    (7, 7),
     (8, 4),
-    (3, 2),
-    (1, 5);
+    (9, 2),
+    (10, 5);
+
+SELECT title.title_name AS TITLE, person.first_name AS FIRST_NAME, person.last_name AS LAST_NAME, gender.gender_name AS GENDER,
+       position_.position_name AS POSITION, phone.phone AS PHONE, email.email AS EMAIL,
+       CONCAT_WS(' ', address.postal_code, address.street, address.city) AS ADDRESS
+
+    FROM person
+        INNER JOIN phone
+            ON person.id_person = phone.phone_person
+        INNER JOIN email
+            ON person.id_person = email.email_person
+        INNER JOIN gender
+            ON person.person_gender = gender.id_gender
+        INNER JOIN address
+            ON person.id_person = address.address_person
+        INNER JOIN person_title
+            ON person.id_person = person_title.person_title_person
+        INNER JOIN title
+            ON person_title.person_title_title = title.id_title
+        INNER JOIN person_position
+            ON person.id_person = person_position.person_position_person
+        INNER JOIN position_
+            ON person_position.person_position_position = position_.id_position_
+
+
+
+
 
