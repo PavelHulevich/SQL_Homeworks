@@ -13,6 +13,7 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
+            <name qname="title_position" />
             <name qname="citys_users" />
             <name qname="@" />
           </node>

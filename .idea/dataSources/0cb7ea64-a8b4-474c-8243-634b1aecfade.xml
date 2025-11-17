@@ -1062,7 +1062,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     <schema id="298" parent="1" name="title_position">
       <AutoIntrospectionLevel>3</AutoIntrospectionLevel>
       <LastIntrospectionLevel>3</LastIntrospectionLevel>
-      <LastIntrospectionLocalTimestamp>2025-11-17.09:15:42</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-11-17.11:11:12</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <schema id="299" parent="1" name="tubes">
@@ -1102,155 +1102,440 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="308" parent="298" name="gender">
+    <table id="308" parent="298" name="address">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <table id="309" parent="298" name="person">
+    <table id="309" parent="298" name="email">
       <DetailsLevel>3</DetailsLevel>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="310" parent="306" name="city_id">
+    <table id="310" parent="298" name="gender">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="311" parent="298" name="person">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="312" parent="298" name="person_position">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="313" parent="298" name="person_title">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="314" parent="298" name="phone">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="315" parent="298" name="position_">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="316" parent="298" name="title">
+      <DetailsLevel>3</DetailsLevel>
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="317" parent="306" name="city_id">
       <AutoIncrement>8</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="311" parent="306" name="city_name">
+    <column id="318" parent="306" name="city_name">
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <index id="312" parent="306" name="PRIMARY">
+    <index id="319" parent="306" name="PRIMARY">
       <ColNames>city_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="313" parent="306" name="city_name">
+    <index id="320" parent="306" name="city_name">
       <ColNames>city_name</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="314" parent="306" name="PRIMARY">
+    <key id="321" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="315" parent="306" name="city_name">
+    <key id="322" parent="306" name="city_name">
       <UnderlyingIndexName>city_name</UnderlyingIndexName>
     </key>
-    <check id="316" parent="307" name="users_chk_1">
+    <check id="323" parent="307" name="users_chk_1">
       <NameSurrogate>1</NameSurrogate>
       <Predicate>(`birthday` &gt;= _utf8mb4\&apos;1900-01-01\&apos;) and (`birthday` &lt; sysdate())</Predicate>
     </check>
-    <column id="317" parent="307" name="users_id">
+    <column id="324" parent="307" name="users_id">
       <AutoIncrement>16</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="318" parent="307" name="first_name">
+    <column id="325" parent="307" name="first_name">
       <Position>2</Position>
       <StoredType>varchar(15)|0s</StoredType>
     </column>
-    <column id="319" parent="307" name="last_name">
+    <column id="326" parent="307" name="last_name">
       <Position>3</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="320" parent="307" name="user_city">
+    <column id="327" parent="307" name="user_city">
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="321" parent="307" name="birthday">
+    <column id="328" parent="307" name="birthday">
       <DefaultExpression>&apos;1900-01-01&apos;</DefaultExpression>
       <Position>5</Position>
       <StoredType>date|0s</StoredType>
     </column>
-    <foreign-key id="322" parent="307" name="users_ibfk_1">
+    <foreign-key id="329" parent="307" name="users_ibfk_1">
       <ColNames>user_city</ColNames>
       <RefColNames>city_id</RefColNames>
       <RefTableName>citys</RefTableName>
     </foreign-key>
-    <index id="323" parent="307" name="PRIMARY">
+    <index id="330" parent="307" name="PRIMARY">
       <ColNames>users_id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="324" parent="307" name="user_city">
+    <index id="331" parent="307" name="user_city">
       <ColNames>user_city</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="325" parent="307" name="PRIMARY">
+    <key id="332" parent="307" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="326" parent="308" name="id_gender">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="333" parent="308" name="id_address">
+      <AutoIncrement>11</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="327" parent="308" name="name">
+    <column id="334" parent="308" name="street">
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StoredType>varchar(40)|0s</StoredType>
+    </column>
+    <column id="335" parent="308" name="postal_code">
+      <Position>3</Position>
+      <StoredType>char(6)|0s</StoredType>
+    </column>
+    <column id="336" parent="308" name="city">
+      <Position>4</Position>
+      <StoredType>varchar(40)|0s</StoredType>
+    </column>
+    <column id="337" parent="308" name="address_person">
+      <Position>5</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="338" parent="308" name="address_ibfk_1">
+      <ColNames>address_person</ColNames>
+      <RefColNames>id_person</RefColNames>
+      <RefTableName>person</RefTableName>
+    </foreign-key>
+    <index id="339" parent="308" name="PRIMARY">
+      <ColNames>id_address</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="340" parent="308" name="address_person">
+      <ColNames>address_person</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="341" parent="308" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="342" parent="309" name="id_email">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="343" parent="309" name="email">
+      <Position>2</Position>
+      <StoredType>varchar(100)|0s</StoredType>
+    </column>
+    <column id="344" parent="309" name="email_person">
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="345" parent="309" name="email_ibfk_1">
+      <ColNames>email_person</ColNames>
+      <RefColNames>id_person</RefColNames>
+      <RefTableName>person</RefTableName>
+    </foreign-key>
+    <index id="346" parent="309" name="PRIMARY">
+      <ColNames>id_email</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="347" parent="309" name="email_person">
+      <ColNames>email_person</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="348" parent="309" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="349" parent="310" name="id_gender">
+      <AutoIncrement>3</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="350" parent="310" name="gender_name">
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <index id="328" parent="308" name="PRIMARY">
+    <index id="351" parent="310" name="PRIMARY">
       <ColNames>id_gender</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="329" parent="308" name="name">
-      <ColNames>name</ColNames>
+    <index id="352" parent="310" name="gender_name">
+      <ColNames>gender_name</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="330" parent="308" name="PRIMARY">
+    <key id="353" parent="310" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="331" parent="308" name="name">
-      <UnderlyingIndexName>name</UnderlyingIndexName>
+    <key id="354" parent="310" name="gender_name">
+      <UnderlyingIndexName>gender_name</UnderlyingIndexName>
     </key>
-    <column id="332" parent="309" name="id_person">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="355" parent="311" name="id_person">
+      <AutoIncrement>11</AutoIncrement>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="333" parent="309" name="first_name">
+    <column id="356" parent="311" name="first_name">
+      <NotNull>1</NotNull>
       <Position>2</Position>
       <StoredType>varchar(20)|0s</StoredType>
     </column>
-    <column id="334" parent="309" name="last_name">
+    <column id="357" parent="311" name="last_name">
+      <NotNull>1</NotNull>
       <Position>3</Position>
       <StoredType>varchar(40)|0s</StoredType>
     </column>
-    <column id="335" parent="309" name="person_gender">
+    <column id="358" parent="311" name="person_gender">
       <Position>4</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <foreign-key id="336" parent="309" name="person_ibfk_1">
+    <foreign-key id="359" parent="311" name="person_ibfk_1">
       <ColNames>person_gender</ColNames>
       <RefColNames>id_gender</RefColNames>
       <RefTableName>gender</RefTableName>
     </foreign-key>
-    <index id="337" parent="309" name="PRIMARY">
+    <index id="360" parent="311" name="PRIMARY">
       <ColNames>id_person</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="338" parent="309" name="person_gender">
+    <index id="361" parent="311" name="person_gender">
       <ColNames>person_gender</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="339" parent="309" name="PRIMARY">
+    <key id="362" parent="311" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="363" parent="312" name="id_person_position">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="364" parent="312" name="person_position_person">
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="365" parent="312" name="person_position_position">
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="366" parent="312" name="person_position_ibfk_1">
+      <ColNames>person_position_person</ColNames>
+      <RefColNames>id_person</RefColNames>
+      <RefTableName>person</RefTableName>
+    </foreign-key>
+    <foreign-key id="367" parent="312" name="person_position_ibfk_2">
+      <ColNames>person_position_position</ColNames>
+      <RefColNames>id_position_</RefColNames>
+      <RefTableName>position_</RefTableName>
+    </foreign-key>
+    <index id="368" parent="312" name="PRIMARY">
+      <ColNames>id_person_position</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="369" parent="312" name="person_position_person">
+      <ColNames>person_position_person</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="370" parent="312" name="person_position_position">
+      <ColNames>person_position_position</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="371" parent="312" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="372" parent="313" name="id_person_title">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="373" parent="313" name="person_title_person">
+      <Position>2</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="374" parent="313" name="person_title_title">
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="375" parent="313" name="person_title_ibfk_1">
+      <ColNames>person_title_person</ColNames>
+      <RefColNames>id_person</RefColNames>
+      <RefTableName>person</RefTableName>
+    </foreign-key>
+    <foreign-key id="376" parent="313" name="person_title_ibfk_2">
+      <ColNames>person_title_title</ColNames>
+      <RefColNames>id_title</RefColNames>
+      <RefTableName>title</RefTableName>
+    </foreign-key>
+    <index id="377" parent="313" name="PRIMARY">
+      <ColNames>id_person_title</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="378" parent="313" name="person_title_person">
+      <ColNames>person_title_person</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="379" parent="313" name="person_title_title">
+      <ColNames>person_title_title</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="380" parent="313" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="381" parent="314" name="id_phone">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="382" parent="314" name="phone">
+      <Position>2</Position>
+      <StoredType>char(13)|0s</StoredType>
+    </column>
+    <column id="383" parent="314" name="phone_person">
+      <Position>3</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <foreign-key id="384" parent="314" name="phone_ibfk_1">
+      <ColNames>phone_person</ColNames>
+      <RefColNames>id_person</RefColNames>
+      <RefTableName>person</RefTableName>
+    </foreign-key>
+    <index id="385" parent="314" name="PRIMARY">
+      <ColNames>id_phone</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="386" parent="314" name="phone_person">
+      <ColNames>phone_person</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="387" parent="314" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="388" parent="315" name="id_position_">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="389" parent="315" name="position_name">
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <index id="390" parent="315" name="PRIMARY">
+      <ColNames>id_position_</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="391" parent="315" name="position_name">
+      <ColNames>position_name</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="392" parent="315" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="393" parent="315" name="position_name">
+      <UnderlyingIndexName>position_name</UnderlyingIndexName>
+    </key>
+    <column id="394" parent="316" name="id_title">
+      <AutoIncrement>11</AutoIncrement>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <column id="395" parent="316" name="title_name">
+      <Position>2</Position>
+      <StoredType>varchar(20)|0s</StoredType>
+    </column>
+    <index id="396" parent="316" name="PRIMARY">
+      <ColNames>id_title</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="397" parent="316" name="title_name">
+      <ColNames>title_name</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="398" parent="316" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="399" parent="316" name="title_name">
+      <UnderlyingIndexName>title_name</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>
