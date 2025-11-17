@@ -159,8 +159,28 @@ SELECT *                                        -- Перекрёстное со
     FROM users AS u                             -- каждой строке первой таблицы подставляется каждая из строк второй таблицы
         CROSS JOIN citys AS c;
 
+SELECT users.first_name, users.last_name,       --  Соединение двух таблиц при без использования JOIN, при помощи WHERE
+       citys.city_name                          -- выводятся имена пользователей и их города.
+    FROM users,
+         citys
+    WHERE user_city = city_id;
 
+SELECT citys.city_name, COUNT(city_name) AS 'Сколько из этого города'
+    FROM users, citys                   --  Соединение двух таблиц без использования JOIN, при помощи WHERE
+    WHERE user_city = city_id           -- выводятся названия городов и количество пользователей из этого города,
+    GROUP BY city_name                  -- при условии, если в этом городе более одного пользователя.
+    HAVING COUNT(city_name) > 1         -- с сортировкой по названию города.
+    ORDER BY city_name;
 
+SELECT citys.city_name 'Название города', COUNT(citys.city_name) AS 'Пользователей в этом городе родившихся начиная с 1981'
+    FROM users                                       -- Соединение двух таблиц с использованием JOIN.
+        INNER JOIN citys                             -- выводятся названия городов и количество пользователей из этого города,
+        ON users.user_city = citys.city_id   -- после чего выбираются пользователи рожденные начиная с 1981 года
+    WHERE YEAR(users.birthday) > 1980
+    GROUP BY city_name
+    ORDER BY city_name;
 
-
+SELECT *                                    -- Выводит все строки из таблицы пользователей для которых нет ключа
+    FROM users                              -- указывающего на город.
+    WHERE user_city IS NULL
 
