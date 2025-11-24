@@ -261,13 +261,31 @@ SELECT DATEDIFF(CURDATE(),
         CONCAT(
         YEAR(CURDATE()),
         '-01-01'))+1
-        AS 'Номер дня в этом году'
+        AS 'Номер дня в этом году';
 
+-- Выводит имена юзеров и количество полных лет
+SELECT users.first_name 'ФИО', FLOOR(DATEDIFF(CURDATE(), users.birthday)/365) 'Полных лет'
+        FROM users;
 
+-- Выводит средний возраст всех юзеров
+SELECT FLOOR(AVG((DATEDIFF(CURDATE(), users.birthday)/365))) 'Средний возраст пользователей'
+        FROM users;
 
+-- Выводит ФИО пользователей, дату их рождения и приписку о рождении до или после 1980 года.
+SELECT users.first_name 'ФИО', users.birthday 'Дата рождения',
+       IF(YEAR(users.birthday) >= 1980, 'Родился после 1979 года', 'Родился до 1980 года') 'В какой период родился'
+    FROM users;
 
+-- Выводит фамилию, имя и дату рождения. Если имя или фамилия не определены то указывается 'Не определено'
+SELECT IFNULL(users.first_name, 'Не определено') AS 'Фамилия',
+       IFNULL(users.last_name, 'Не определено') AS 'Имя',
+       users.birthday 'Дата рождения'
+    FROM users;
 
-
+-- Выводит фамилии пользователей, если фамилия не определена то выводит имя.
+SELECT COALESCE(users.first_name, users.last_name, 'Не определено') 'ФИО',
+        users.birthday
+    FROM users
 
 
 
