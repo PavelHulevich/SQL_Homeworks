@@ -282,7 +282,7 @@ SELECT IFNULL(users.first_name, 'Не определено') AS 'Фамилия'
        users.birthday 'Дата рождения'
     FROM users;
 
--- Выводит фамилии пользователей, если фамилия не определена то выводит имя.
+-- Выводит фамилии пользователей, если фамилия не определена то выводит имя. Также  выводит дату рождения
 SELECT COALESCE(users.first_name, users.last_name, 'Не определено') 'ФИО',
         users.birthday
     FROM users
