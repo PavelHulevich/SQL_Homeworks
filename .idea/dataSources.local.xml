@@ -13,9 +13,9 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
+            <name qname="citys_users" />
             <name qname="practical_test_1_hulevich" />
             <name qname="title_position" />
-            <name qname="citys_users" />
             <name qname="@" />
           </node>
         </introspection-scope>

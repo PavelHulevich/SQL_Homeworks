@@ -78,3 +78,4 @@ SELECT  student.student_name AS 'Имя студента', student.student_group
      WHERE student_groupe <> 'G-1' AND student_groupe <> 'G-2' ;
 
 
+select concat(`student_groupe`, ' ', `student_name`) from student;

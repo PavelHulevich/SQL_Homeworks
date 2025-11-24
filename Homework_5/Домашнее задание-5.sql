@@ -18,9 +18,14 @@ drop table if exists citys;
  foreign key (user_city) references citys(city_id)
  );
 
-insert citys (city_name)
-values ('Рига'), ('Осло'), ('Мозырь'), ('Гадюкино'), ('Брест'),
-       ('Ми-ми-минск'), ('Мур-мур-мурманск');
+alter table citys add city_population int;
+alter table citys add city_district int;
+
+insert citys (city_name,citys.city_population, citys.city_district)
+values ('Рига', 545862, 7), ('Осло', 471256, 5), ('Мозырь', 95462, 4),
+       ('Гадюкино', 1845, 1), ('Брест', 325426, 4),
+       ('Ми-ми-минск', 2458632, 7), ('Мур-мур-мурманск',589632, 5 );
+
 
 # check (birthday >= '1900-01-01' and birthday <= curdate());
 # При сравнении с текущей датой появляется ошибка
@@ -182,5 +187,10 @@ SELECT citys.city_name 'Название города', COUNT(citys.city_name) A
 
 SELECT *                                    -- Выводит все строки из таблицы пользователей для которых нет ключа
     FROM users                              -- указывающего на город.
-    WHERE user_city IS NULL
+    WHERE user_city IS NULL;
+
+SELECT LENGTH(CONCAT('Ton', ' ', 'Smith')), CONCAT('Ton', ' ', 'Smith');
+
+SELECT TRIM(' Tom Smith   ');
+
 
