@@ -294,7 +294,7 @@ SELECT COALESCE(users.first_name, users.last_name, 'Не определено') 
 SELECT MAX(citys.city_population), MIN(citys.city_population)
     FROM citys;
 
--- Выводит годы рождения в которых родилось более 1 пользователя
+-- Выводит годы рождения в которых родилось более 1 пользователя с использованием GROUP и HAVING
 SELECT  YEAR(users.birthday) AS 'Год рождения', COUNT(users_id) AS 'Количество родившихся в этом году'
     FROM users
     GROUP BY YEAR(users.birthday)
@@ -309,8 +309,10 @@ SELECT citys.city_name,
        END AS "Уровень населения"
 FROM citys;
 
--- Вывести средний доход всех пользователей
-SELECT AVG(users.income) AS 'Средний доход всех пользователей'
+-- Вывести средний, максимальный и минимальный доход всех пользователей с округлением до копеек
+SELECT ROUND(AVG(users.income),2) AS 'Средний доход всех пользователей',
+       ROUND(MAX(users.income),2) AS 'Максимальный доход всех пользователей',
+       ROUND(MIN(users.income),2) AS 'Минимальный доход всех пользователей'
     FROM users;
 
 -- Вывести ФИО и город, если город не NULL

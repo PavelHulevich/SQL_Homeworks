@@ -287,5 +287,3 @@ SELECT COALESCE(users.first_name, users.last_name, 'Не определено') 
         users.birthday
     FROM users
 
-
-
