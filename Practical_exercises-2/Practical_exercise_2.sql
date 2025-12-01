@@ -122,11 +122,11 @@ SELECT teacher.teacher_name, student_name
     LEFT JOIN grade g on teacher.teacher_id = g.grade_teacher_id
     LEFT JOIN student s on g.grade_student_id = s.student_id;
 
--- Получить количество положительных оценок у дипломников каждой кафедры.
+-- Получить количество положительных оценок (>=4) у дипломников каждой кафедры в названии которой есть буква 'К'.
 SELECT teacher.teacher_cathedra 'Кафедра', count(grade) 'Количество положительных оценок'
     FROM teacher
     LEFT JOIN grade g on teacher.teacher_id = g.grade_teacher_id
-    WHERE grade >=4
+    WHERE grade >=4 AND teacher_cathedra LIKE '%K%'
     GROUP BY teacher_cathedra;
 
 # -- Получить пары всех студентов обучающихся в одной и той же группе.
@@ -134,7 +134,7 @@ SELECT teacher.teacher_cathedra 'Кафедра', count(grade) 'Количест
 #     FROM student
 #     ORDER BY student_groupe
 
-SELECT s1.student_groupe,
+SELECT s1.student_groupe 'Группа',
        s1.student_name 'Первый студент',
        s2.student_name 'Второй студент'
     FROM student s1
