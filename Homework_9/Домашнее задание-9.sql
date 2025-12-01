@@ -46,15 +46,15 @@ insert users(first_name, last_name, birthday, user_city, users.income)
 			('Сидоров', 'Иван', '1982-01-11',3, 3500),
 			('Петров', 'Сидор', '1975-11-06',3, 1100.25),
 			('Ковалев', 'Вася', '1986-05-06',3, 1456.578),
-            ('Васин', 'Виталий', '1980-05-06',1, 4568.2657),
-            ('Виталин', 'Вася', '1980-05-06',1, 4756.25647),
+            ('Васин', 'Виталий', '1980-05-06',6, 4568.2657),
+            ('Виталин', 'Вася', '1980-05-06',2, 4756.25647),
             ('Коржов', 'Иван', '1979-05-06',1, 7532.852),
             ('Кефиров', 'Коржик', '1980-05-06',NULL,9546.7564),
             ('Белый', 'Петр', '1987-05-06',NULL, 7546.568),
             ('Желтый', '', '1985-05-06',4, 45963.25),
             ('Зеленый', null, '1989-05-06',4, 124563.8456),
             (null, 'Джек', '1988-05-06',4, 45632.856),
-            ('Черный', 'Петр', '1987-05-06',1, 22333.4444),
+            ('Черный', 'Петр', '1987-05-06',6, 22333.4444),
             ('Лысый', 'Иван', '1980-01-06',1, 4555.555),
             (null, 'Иван', '1980-09-06',5, 111.33);
 
@@ -335,14 +335,20 @@ SELECT users.first_name 'ФИО'
     FROM users
     WHERE (SELECT citys.city_population FROM citys WHERE city_id = user_city) < 100000;
 
+-- Выводим список пользователей проживающих в столицах и название города-столицы
+SELECT users.first_name 'ФИО', (SELECT citys.city_name FROM citys WHERE city_id=user_city)  'Город-столица'
+     FROM users
+     WHERE (SELECT citys.city_capital FROM citys WHERE city_id = user_city);
+
 -- Увеличить зарплату работников проживающих в столицах. (citys.city_capital = true)
 UPDATE users
     SET users.income = users.income * 1.3
-    WHERE (SELECT citys.city_capital = true FROM citys WHERE city_id = users.user_city);
+    WHERE (SELECT citys.city_capital FROM citys WHERE city_id = users.user_city);
 
--- Удалить все записи о пользователях проживающих в столицах
-DELETE FROM users
-    WHERE user_city IN (SELECT citys.city_id FROM citys WHERE citys.city_capital = TRUE);
+-- Релокация пользователей из Мозыря в Брест
+UPDATE users
+    SET user_city = (SELECT citys.city_id FROM citys WHERE city_name = 'Брест')
+    WHERE (SELECT city_name FROM citys WHERE city_id = users.user_city) = 'Мозырь';
 
 -- Добавить нового пользователя в таблицу пользователей с обозначением города проживания - Брест.
 INSERT INTO users (first_name, last_name, user_city)
@@ -351,7 +357,10 @@ INSERT INTO users (first_name, last_name, user_city)
             (SELECT citys.city_id FROM citys WHERE city_name='Брест')
         );
 
--- Получаем список городов в которых нет пользователей из таблицы юзеров. (Как раз перед этим удалили пользователей из столиц)
+-- Получаем список городов в которых нет пользователей из таблицы юзеров.
 SELECT city_name 'Города в которых нет пользователей' FROM citys
     WHERE NOT EXISTS(SELECT * FROM users WHERE user_city=city_id);
 
+-- Удалить все записи о пользователях проживающих в столицах
+DELETE FROM users
+    WHERE user_city IN (SELECT citys.city_id FROM citys WHERE citys.city_capital = TRUE);
