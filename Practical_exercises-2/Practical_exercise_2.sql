@@ -44,7 +44,7 @@ INSERT student(student_name, student_groupe, student_teacher_id)
             ('Чебурашка', 'G-1', 2),
             ('Дракула', 'G-2', NULL),
             ('Коля', 'G-3', 4),
-            ('Юля', 'G-', 4);
+            ('Юля', 'G-2', 4);
 
 INSERT grade(grade_teacher_id, grade_student_id, grade_date, grade)
     VALUES (1, 1, '2025-01-11', 7),
