@@ -130,10 +130,6 @@ SELECT teacher.teacher_cathedra 'Кафедра', count(grade) 'Количест
     GROUP BY teacher_cathedra;
 
 # -- Получить пары всех студентов обучающихся в одной и той же группе.
-# SELECT student.student_groupe, student.student_name
-#     FROM student
-#     ORDER BY student_groupe
-
 SELECT s1.student_groupe 'Группа',
        s1.student_name 'Первый студент',
        s2.student_name 'Второй студент'
