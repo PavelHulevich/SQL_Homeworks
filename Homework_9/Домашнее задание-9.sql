@@ -344,4 +344,14 @@ UPDATE users
 DELETE FROM users
     WHERE user_city IN (SELECT citys.city_id FROM citys WHERE citys.city_capital = TRUE);
 
+-- Добавить нового пользователя в таблицу пользователей с обозначением города проживания - Брест.
+INSERT INTO users (first_name, last_name, user_city)
+    VALUES
+        ('Селезнева', 'Алиса',
+            (SELECT citys.city_id FROM citys WHERE city_name='Брест')
+        );
+
+-- Получаем список городов в которых нет пользователей из таблицы юзеров. (Как раз перед этим удалили пользователей из столиц)
+SELECT city_name 'Города в которых нет пользователей' FROM citys
+    WHERE NOT EXISTS(SELECT * FROM users WHERE user_city=city_id);
 
