@@ -7,8 +7,7 @@ drop table if exists citys;
 
  create table citys (
  city_id int auto_increment primary key,
- city_name varchar(20) unique not null
- );
+ city_name varchar(20) unique not null);
 
  create table users ( 
  users_id int auto_increment primary key,
@@ -20,11 +19,16 @@ drop table if exists citys;
 
 alter table citys add city_population int;
 alter table citys add city_district int;
+ALTER TABLE citys ADD city_capital bool default false;
 
-insert citys (city_name,citys.city_population, citys.city_district)
-values ('Рига', 545862, 7), ('Осло', 471256, 5), ('Мозырь', 95462, 4),
-       ('Гадюкино', 1845, 1), ('Брест', 325426, 4),
-       ('Ми-ми-минск', 2458632, 7), ('Мур-мур-мурманск',589632, 5 );
+insert citys (city_name,citys.city_population, citys.city_district, citys.city_capital)
+values ('Рига', 545862, 7, true),
+       ('Осло', 471256, 5, true),
+       ('Мозырь', 95462, 4, false),
+       ('Гадюкино', 1845, 1, false),
+       ('Брест', 325426, 4, false),
+       ('Ми-ми-минск', 2458632, 7, true),
+       ('Мур-мур-мурманск',589632, 5, false);
 
 
 # check (birthday >= '1900-01-01' and birthday <= curdate());
@@ -330,5 +334,14 @@ SELECT users.first_name 'ФИО',
 SELECT users.first_name 'ФИО'
     FROM users
     WHERE (SELECT citys.city_population FROM citys WHERE city_id = user_city) < 100000;
+
+-- Увеличить зарплату работников проживающих в столицах. (citys.city_capital = true)
+UPDATE users
+    SET users.income = users.income * 1.3
+    WHERE (SELECT citys.city_capital = true FROM citys WHERE city_id = users.user_city);
+
+-- Удалить все записи о пользователях проживающих в столицах
+DELETE FROM users
+    WHERE user_city IN (SELECT citys.city_id FROM citys WHERE citys.city_capital = TRUE);
 
 
