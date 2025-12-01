@@ -117,7 +117,7 @@ SELECT student.student_name, grade
     ORDER BY student_id, grade DESC;
 
 -- Получить список дипломников у каждого преподавателя.
-SELECT  DISTINCT  teacher.teacher_name, student_name
+SELECT teacher.teacher_name, student_name
     FROM teacher
     LEFT JOIN grade g on teacher.teacher_id = g.grade_teacher_id
     LEFT JOIN student s on g.grade_student_id = s.student_id;
@@ -127,4 +127,16 @@ SELECT teacher.teacher_cathedra 'Кафедра', count(grade) 'Количест
     FROM teacher
     LEFT JOIN grade g on teacher.teacher_id = g.grade_teacher_id
     WHERE grade >=4
-    GROUP BY teacher_cathedra
+    GROUP BY teacher_cathedra;
+
+# -- Получить пары всех студентов обучающихся в одной и той же группе.
+# SELECT student.student_groupe, student.student_name
+#     FROM student
+#     ORDER BY student_groupe
+
+SELECT s1.student_groupe,
+       s1.student_name 'Первый студент',
+       s2.student_name 'Второй студент'
+    FROM student s1
+    JOIN student s2 on s1.student_groupe = s2.student_groupe
+    WHERE s1.student_id < s2.student_id
