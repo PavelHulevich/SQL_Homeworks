@@ -374,16 +374,16 @@ create table logs(
                      log_message TEXT NOT NULL);
 
 -- Добавляем данные в таблицу с городами с помощью транзакции с логированием и с блокировкой от записи из другой сессии.
-SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;
-START TRANSACTION;                      -- начало транзакции
-INSERT citys(city_name, citys.city_population, citys.city_district, citys.city_capital)
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;  -- назначаем уровень изоляции транзакций
+START TRANSACTION;                                -- начало транзакции
+INSERT citys(city_name, citys.city_population, citys.city_district, citys.city_capital)  -- добавляем строку в таблицу
     VALUES ('Витебск-35', 440000, 5, false);
 SET @new_city_id = LAST_INSERT_ID();
-INSERT logs(log_message)
+INSERT logs(log_message)                                -- добавляем строку в таблицу логов
     VALUES (CONCAT('Добавлен город: ',
             (SELECT city_name
                 FROM citys
                 WHERE city_id = @new_city_id),
             '. id Нового города: ', @new_city_id));
--- ROLLBACK ;
-COMMIT;
+-- ROLLBACK ;                                            -- Для отката
+COMMIT;                                                  -- Для выполнения
