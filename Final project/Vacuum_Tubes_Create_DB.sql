@@ -16,28 +16,30 @@ create table customer    -- Организации заказчиков
     foreign key (customer_city) references customer_city(customer_city_id)
 );
 
-# create table tube_size
-# (
-#     tube_size_id            int auto_increment primary key,
-#     tube_size_name          ENUM('1375', '13100', '16100') NOT NULL    -- размер пробирки (13100, 1375, 16100)
-# );
+create table tube_size
+(
+    tube_size_id            int auto_increment primary key,
+    tube_size_name          ENUM('1375', '13100', '16100') NOT NULL    -- размер пробирки (13100, 1375, 16100)
+);
+
 
 create table production  -- запланированное производство однотипных пробирок от разных производителей
 (
     production_id           int auto_increment PRIMARY KEY,
-    production_tube_size    ENUM('1375', '13100', '16100') NOT NULL,
+    production_tube_size    int NOT NULL,                               -- размер пробирки (13100, 1375, 16100)
     production_tube_type    CHAR(3) NOT NULL ,
     production_tube_volume  DECIMAL(4,1) NOT NULL
         CHECK (production.production_tube_volume >= 1 and production.production_tube_volume <= 10),
     production_status       ENUM ('В ожидании', 'В производстве') DEFAULT 'В ожидании',
     production_change_date  datetime default null,
-    production_quantity     int default 0
+    production_quantity     int default 0,
+    foreign key (production_tube_size) references tube_size(tube_size_id)
 );
 
 create table Orders     --  заказы на пробирку от определенных покупателей
 (
     order_Id        INT auto_increment PRIMARY KEY,             -- id заказа на производство пробирки
-    tube_size       ENUM('1375', '13100', '16100') NOT NULL,    -- размер пробирки (13100, 1375, 16100)
+    tube_size       int NOT NULL,                               -- размер пробирки (13100, 1375, 16100)
     tube_type       CHAR(3) NOT NULL,       					-- вид наполнителя в пробрке (ZK, 9NC, 4NC, K3E, K2E, ZKR)
     nc_percent      ENUM('3,2', '3,8') DEFAULT NULL,		    -- концентрация наполнителя если это 9NC или 4NC (Null; 3,2; 3,8)
     tube_volume     DECIMAL(4,1) NOT NULL
@@ -48,7 +50,8 @@ create table Orders     --  заказы на пробирку от опреде
     order_date      DATE,										-- дата подачи заказа
     dl_date         DATE,										-- последняя дата для выполнения заказа
     order_production        int default null,                   -- id партии однотипных пробирок для производства
-    foreign key (order_production) references production(production_id)
+    foreign key (order_production) references production(production_id),
+    foreign key (tube_size) references tube_size(tube_size_id)
 );
 create table order_customer
 (
@@ -58,6 +61,9 @@ create table order_customer
     foreign key (order_customer_order) references orders(order_id),
     foreign key (order_customer_customer) references customer(customer_id)
 );
+-- Заполняем возможные размеры пробирки
+insert tube_size(tube_size_name)
+    values ('1375'), ('13100'), ('16100');
 
 insert customer_city(customer_city.customer_city_name)
     values ('Минск'), ('Витебск'), ('Гомель'),
@@ -69,13 +75,13 @@ INSERT customer(customer.customer_name, customer.customer_city)
            ('Горбольница №1', 3), ('Ветклиника', 4), ('Областная больница', 2);
 
 INSERT ORDERS(Orders.tube_size, Orders.tube_type, Orders.nc_percent, Orders.tube_volume, Orders.quantity, Orders.order_date, Orders.dl_date)
-	VALUES ('1375', 'ZKR', NULL, 3.0, 10000, '2025-10-25', '2025-11-20'),
-		    ('1375', 'K2E', NULL, 2.0, 30000, '2025-10-25', '2025-11-20'),
-           ('1375', 'ZKR', NULL, 3.0, 50000, '2025-10-28', '2025-11-28'),
+	VALUES (1, 'ZKR', NULL, 3.0, 10000, '2025-10-25', '2025-11-20'),
+		    (1, 'K2E', NULL, 2.0, 30000, '2025-10-25', '2025-11-20'),
+           (1, 'ZKR', NULL, 3.0, 50000, '2025-10-28', '2025-11-28'),
 
-           ('1375', 'K2E', NULL, 2.0, 30000, '2025-10-25', '2025-11-20'),
-           ('13100', 'ZKR', NULL, 5.0, 100000, '2025-10-29', '2025-11-29'),
-           ('13100', 'ZKR', NULL, 5.0, 40000, '2025-10-30', '2025-11-30');
+           (1, 'K2E', NULL, 2.0, 30000, '2025-10-25', '2025-11-20'),
+           (2, 'ZKR', NULL, 5.0, 100000, '2025-10-29', '2025-11-29'),
+           (2, 'ZKR', NULL, 5.0, 40000, '2025-10-30', '2025-11-30');
 
 insert order_customer
     values (1, 2),
@@ -86,6 +92,7 @@ insert order_customer
            (6, 3);
 
 SELECT * FROM Orders
+    join tube_size ts on Orders.tube_size = ts.tube_size_id
 
 
 /*
