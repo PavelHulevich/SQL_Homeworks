@@ -13,10 +13,14 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
+            <name qname="vacuum_tubes" />
             <name qname="citys_users" />
-            <name qname="practical_test_1_hulevich" />
-            <name qname="title_position" />
+            <name qname="practical_test_2_hulevich" />
             <name qname="@" />
+            <name qname="practical_test_1_hulevich" />
+            <name qname="sys" />
+            <name qname="title_position" />
+            <name qname="tubes" />
           </node>
         </introspection-scope>
       </schema-mapping>

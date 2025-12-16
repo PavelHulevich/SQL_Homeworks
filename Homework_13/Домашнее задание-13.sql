@@ -7,7 +7,8 @@ drop table if exists citys;
 
  create table citys (
  city_id int auto_increment primary key,
- city_name varchar(20) unique not null);
+ city_name varchar(20) unique not null)
+ ;
 
  create table users ( 
  users_id int auto_increment primary key,
@@ -18,7 +19,7 @@ drop table if exists citys;
  );
 
 alter table citys add city_population int;
-alter table citys add city_district int;
+alter table citys add city_district int default 0;
 ALTER TABLE citys ADD city_capital bool default false;
 
 insert citys (city_name,citys.city_population, citys.city_district, citys.city_capital)
@@ -365,3 +366,103 @@ SELECT city_name 'Города в которых нет пользователе
 DELETE FROM users
     WHERE user_city IN (SELECT citys.city_id FROM citys WHERE citys.city_capital = TRUE);
 
+# ________________________ДОМАШНЯЯ РАБОТА №11 ___________________________
+-- Создаем таблицу логов
+drop table if exists logs;
+create table logs(
+                     log_id INT AUTO_INCREMENT PRIMARY KEY,
+                     log_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                     log_message TEXT NOT NULL);
+
+-- Добавляем данные в таблицу с городами с помощью транзакции с логированием и с блокировкой от записи из другой сессии.
+SET TRANSACTION ISOLATION LEVEL REPEATABLE READ;  -- назначаем уровень изоляции транзакций
+START TRANSACTION;                                -- начало транзакции
+INSERT citys(city_name, citys.city_population, citys.city_district, citys.city_capital)  -- добавляем строку в таблицу
+    VALUES ('Витебск-35', 440000, 5, false);
+SET @new_city_id = LAST_INSERT_ID();
+INSERT logs(log_message)                                -- добавляем строку в таблицу логов
+    VALUES (CONCAT('Добавлен город: ',
+            (SELECT city_name
+                FROM citys
+                WHERE city_id = @new_city_id),
+            '. id Нового города: ', @new_city_id));
+-- ROLLBACK ;                                            -- Для отката
+COMMIT;                                                  -- Для выполнения
+
+
+# ________________________ДОМАШНЯЯ РАБОТА №12 ___________________________
+-- Задается представление формирующее список городов имеющих статус столицы
+CREATE OR REPLACE VIEW Citys_list AS
+    SELECT citys.city_name, citys.city_population,
+            IF(citys.city_capital, 'Столица', 'Не столица') AS 'Столичный город'
+    FROM citys;
+
+-- Выводит представление со списком городов, выбирая города начинающиеся на "М"
+SELECT * FROM Citys_list
+    WHERE city_name LIKE 'М%';
+
+-- Обновление. Меняет название города Осло на Таллин используя обращение к таблице через представление
+UPDATE Citys_list
+    SET city_name = 'Таллин' WHERE city_name = 'Осло';
+
+-- Создаем временную таблицу-представление
+CREATE TEMPORARY TABLE Tmp_Citys_list
+SELECT citys.city_name, citys.city_population,
+       IF(citys.city_capital, 'Столица', 'Не столица') AS 'Столичный город'
+FROM citys;
+
+-- Добавляем данные во временную таблицу-представление
+INSERT Tmp_Citys_list(city_name, city_population)
+    VALUES ('Брянск', 400000);
+
+-- Просмотр временной таблицы-представления. Данные добавились
+SELECT * FROM Tmp_Citys_list;
+
+-- Удаляем ранее добавленные данные из временной таблицы
+DELETE FROM Tmp_Citys_list  WHERE city_name = 'Брянск';
+
+-- Удаляем временную таблицу-представление
+DROP TABLE Tmp_Citys_list;
+
+-- Изменяем представление
+ALTER VIEW Citys_list AS
+    SELECT citys.city_name, citys.city_population,
+           IF(citys.city_capital, 'Столица', 'Не столица') AS 'Столичный город',
+           citys.city_district 'Количество районов'
+    FROM citys;
+
+# ________________________ДОМАШНЯЯ РАБОТА №13 ___________________________
+-- Триггер Before Insert для таблицы c городами. Гарантированно делает первую букву названия прописной
+delimiter //
+create trigger before_insert_citys
+    before insert on citys
+    for each row                                        -- для каждой строки вводимой в citys
+        begin
+            if NEW.city_name is not null and length(NEW.city_name) > 0 then  -- если вводимое название не нулевое и не null
+                set NEW.city_name = concat(             -- то из вводимого имени формируем имя нужного вида.
+                    UPPER(LEFT(NEW.city_name, 1)),      -- Первую букву делаем прописной.
+                    LOWER(substring(NEW.city_name, 2))  -- Остальные начиная со второй делаем строчными
+                                        );
+            end if;
+        end;
+delimiter ;
+-- Проверяем триггер
+insert citys (city_name,citys.city_population, citys.city_district, citys.city_capital)
+values ('иРзань', 1455862, 7, false);
+
+-- Триггер After Insert для таблицы с городами. После добавления города вписывает дату добавления в новое поле.
+alter table citys add change_date datetime;
+delimiter //
+create trigger after_insert_citys
+    after insert on citys
+    for each row
+        begin
+            update citys
+            set change_date = now()
+            where city_id =  NEW.city_id;
+        end;
+delimiter ;
+
+show triggers;
+drop trigger before_insert_citys;
+select now();
