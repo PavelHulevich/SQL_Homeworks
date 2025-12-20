@@ -12,18 +12,7 @@
       <user-name>root</user-name>
       <schema-mapping>
         <introspection-scope>
-          <node kind="schema">
-            <name qname="final_project_hulevich_vacuum_tubes" />
-            <name qname="vacuum_tubes" />
-            <name qname="final_exam_hulevich" />
-            <name qname="citys_users" />
-            <name qname="practical_test_2_hulevich" />
-            <name qname="@" />
-            <name qname="practical_test_1_hulevich" />
-            <name qname="sys" />
-            <name qname="title_position" />
-            <name qname="tubes" />
-          </node>
+          <node kind="schema" qname="final_project_hulevich_vacuum_tubes" />
         </introspection-scope>
       </schema-mapping>
     </data-source>

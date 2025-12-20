@@ -137,6 +137,9 @@ INSERT ORDERS(tube_size, tube_type, nc_percent, tube_volume, quantity, order_dat
            (2, 4, NULL, 6.0, 120000, '2025-10-29', '2025-11-29'),
            (1, 1, NULL, 1.0, 12000, '2025-10-30', '2025-11-30');
 
+# INSERT ORDERS(tube_size, tube_type, nc_percent, tube_volume, quantity, order_date, dl_date)
+# VALUES (1, 2, NULL, 3.0, 10000, '2025-10-25', '2025-11-20');
+
 insert order_customer
     values (1, 2),
            (2, 3),
@@ -158,8 +161,7 @@ insert order_customer
 пробирки из orders.tube_size, тип пробирки из order.tube_type и объем пробирки из order.tube_volume.
  А в каждый orders.order_production вписать номер того production.production_id, в сумму которого вошел этот заказ.
 После того как заказ добавлен в производство, статус заказа order_status из "В ожидании" меняется на "В производстве"
- */
-
+*/
 /*
 Если определенный тип пробирки из заказов (в таблице orders) уже есть в плане производства (в таблице production),
 и в таблице заказов появились новые заказы с таким же типом пробирки,
@@ -182,7 +184,8 @@ UPDATE production p
         AND p.production_tube_type = new_orders.tube_type       --
         AND p.production_tube_volume = new_orders.tube_volume   --
 SET p.production_quantity = p.production_quantity + new_orders.total_quantity, -- если такие найдутся то увеличиваем количество в производстве на величину нового заказа
-    p.production_change_date = NOW();       -- меняем дату последнего изменения плана производства этого типа пробирки на текущую
+    p.production_change_date = NOW()       -- меняем дату последнего изменения плана производства этого типа пробирки на текущую
+where p.production_status = 'В ожидании';
 
 -- Обновить заказы, чтобы они ссылались на уже существующую запись в production
 UPDATE Orders o
