@@ -13,6 +13,7 @@
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
+            <name qname="final_project_hulevich_vacuum_tubes" />
             <name qname="vacuum_tubes" />
             <name qname="final_exam_hulevich" />
             <name qname="citys_users" />
