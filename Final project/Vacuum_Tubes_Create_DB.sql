@@ -139,7 +139,7 @@ select * from Order_customer_list;
 select * from Order_customer_list  -- Показывает все заказы для пробирки 1375/ZKR-3.0
     where `Наименование пробирки` = '1375/ZKR-3.0';
 
-select * from Order_customer_list  -- Показывает все заказы сделанные Медтехникой Гомеля
+select * from Order_customer_list  -- Показывает все заказы сделанные Медтехникой Витебска
     where `Заказчик` = 'Медтехника. Витебск';
 
 
