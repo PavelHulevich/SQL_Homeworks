@@ -14,6 +14,7 @@
         <introspection-scope>
           <node kind="schema">
             <name qname="vacuum_tubes" />
+            <name qname="final_exam_hulevich" />
             <name qname="citys_users" />
             <name qname="practical_test_2_hulevich" />
             <name qname="@" />
